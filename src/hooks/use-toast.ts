@@ -193,6 +193,8 @@
 
 // export { useToast, toast }
 
+"use client";
+
 // Inspired by react-hot-toast library
 import * as React from "react";
 
@@ -208,6 +210,7 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement;
 };
 
+// Define ActionTypes
 type ActionTypes = "ADD_TOAST" | "UPDATE_TOAST" | "DISMISS_TOAST" | "REMOVE_TOAST";
 
 let count = 0;
@@ -217,23 +220,28 @@ function genId() {
   return count.toString();
 }
 
-type Action =
-  | {
-      type: "ADD_TOAST";
-      toast: ToasterToast;
-    }
-  | {
-      type: "UPDATE_TOAST";
-      toast: Partial<ToasterToast>;
-    }
-  | {
-      type: "DISMISS_TOAST";
-      toastId?: ToasterToast["id"];
-    }
-  | {
-      type: "REMOVE_TOAST";
-      toastId?: ToasterToast["id"];
-    };
+// Define Action types
+type AddToastAction = {
+  type: "ADD_TOAST";
+  toast: ToasterToast;
+};
+
+type UpdateToastAction = {
+  type: "UPDATE_TOAST";
+  toast: Partial<ToasterToast>;
+};
+
+type DismissToastAction = {
+  type: "DISMISS_TOAST";
+  toastId?: ToasterToast["id"];
+};
+
+type RemoveToastAction = {
+  type: "REMOVE_TOAST";
+  toastId?: ToasterToast["id"];
+};
+
+type Action = AddToastAction | UpdateToastAction | DismissToastAction | RemoveToastAction;
 
 interface State {
   toasts: ToasterToast[];
@@ -254,6 +262,16 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout);
 };
 
+// Type guard to check if the action is of type DismissToastAction
+const isDismissToastAction = (action: Action): action is DismissToastAction => {
+  return action.type === "DISMISS_TOAST";
+};
+
+// Type guard to check if the action is of type RemoveToastAction
+const isRemoveToastAction = (action: Action): action is RemoveToastAction => {
+  return action.type === "REMOVE_TOAST";
+};
+
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -271,7 +289,7 @@ export const reducer = (state: State, action: Action): State => {
       };
 
     case "DISMISS_TOAST": {
-      const { toastId } = action;
+      const { toastId } = action; // `toastId` should be available here
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
@@ -293,11 +311,13 @@ export const reducer = (state: State, action: Action): State => {
     case "REMOVE_TOAST":
       return {
         ...state,
-        toasts: action.toastId ? state.toasts.filter((t) => t.id !== action.toastId) : [],
+        toasts: isRemoveToastAction(action) && action.toastId
+          ? state.toasts.filter((t) => t.id !== action.toastId)
+          : [],
       };
 
     default:
-      return state; // handle unexpected action types
+      return state; // Handle unexpected action types
   }
 };
 
