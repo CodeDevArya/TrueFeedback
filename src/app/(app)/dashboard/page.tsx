@@ -116,7 +116,7 @@ const Page = () => {
   };
 
   const { username } = (session?.user as User) || {};
-  const baseUrl = "http://localhost:3000";
+  const baseUrl = "https://true-feedback-phi.vercel.app";
   const profileUrl = `${baseUrl}/u/${username}`;
 
   const copyToClipboard = () => {
