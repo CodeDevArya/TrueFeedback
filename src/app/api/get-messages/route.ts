@@ -4,7 +4,7 @@ import { User } from 'next-auth';
 import UserModel from '@/models/User';
 import { auth } from '@/auth';
 
-export async function GET(request: Request) {
+export async function GET() {
   await dbConnect();
   const session = await auth();
   const _user: User = session?.user as User;

@@ -3,7 +3,6 @@
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
 import { Button } from "./ui/button";
-import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
 const Navbar = () => {

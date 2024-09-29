@@ -25,7 +25,6 @@ import { toast } from "@/hooks/use-toast";
 import { MessageSchema } from "@/Schemas/messageSchema";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "next-auth/react";
-import { stat } from "fs";
 
 const specialChar = "||";
 
@@ -41,9 +40,9 @@ export default function SendMessage() {
   const username = params.username;
 
   const {
-    complete,
+    // complete,
     completion,
-    isLoading: isSuggestLoading,
+    // isLoading: isSuggestLoading,
     error,
   } = useCompletion({
     api: "/api/suggest-messages",
@@ -90,15 +89,15 @@ export default function SendMessage() {
 
   const { data: session, status } = useSession();
 
-  const fetchSuggestedMessages = async () => {
-    try {
-      const response = await axios.post<ApiResponse>("/api/suggest-messages");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-      // Handle error appropriately
-    }
-  };
+  // const fetchSuggestedMessages = async () => {
+  //   try {
+  //     const response = await axios.post<ApiResponse>("/api/suggest-messages");
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching messages:", error);
+  //     // Handle error appropriately
+  //   }
+  // };
 
   return (
     <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">

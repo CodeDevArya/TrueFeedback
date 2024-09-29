@@ -2,9 +2,7 @@
 
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -21,7 +19,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "./ui/button";
-import { Trash, X } from "lucide-react";
+import { Trash} from "lucide-react";
 import { Message } from "@/models/User";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/apiResponse";
@@ -74,7 +72,7 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete this
-                message and remove it's data from our servers.
+                message and remove it&apos;s data from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

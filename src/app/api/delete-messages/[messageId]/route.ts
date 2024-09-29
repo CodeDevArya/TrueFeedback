@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
-import mongoose from "mongoose";
 import { User } from "next-auth";
 
 export async function DELETE(
@@ -11,8 +10,8 @@ export async function DELETE(
   const messageId = params.messageId;
   await dbConnect();
 
-  const session: any = await auth();
-  const user: User = session?.user;
+  const session = await auth();
+  const user: User = session?.user as User;
 
   if (!session || !session.user) {
     return Response.json({

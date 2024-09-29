@@ -18,17 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { ExternalLink, Loader2, MessageCircle, Users, Zap } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function LandingPage() {
   const { data: session, status } = useSession();
 
-  const [mounted, setMounted] = useState(false);
   const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleUrlSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,7 +94,7 @@ export default function LandingPage() {
 
         <section className="text-center space-y-8">
           <h3 className="text-3xl font-bold text-[#0F172A]">
-            Visit a Creator's Page
+            Visit a Creator&apos;s Page
           </h3>
           <Card className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-none shadow-lg max-w-md mx-auto">
             <CardContent>
@@ -109,7 +104,7 @@ export default function LandingPage() {
               >
                 <Input
                   type="url"
-                  placeholder="Enter creator's URL"
+                  placeholder="Enter creator&apos;s URL"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   className="bg-white dark:bg-gray-700"

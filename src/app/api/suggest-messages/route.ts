@@ -5,11 +5,11 @@ import { streamText, convertToCoreMessages } from "ai";
 export const maxDuration = 30;
 
 type MessageType = {
-  role: any;
+  role: "system" | "user" | "assistant";
   content: string;
 };
 
-export async function POST(req: Request) {
+export async function POST() {
   const apiKey = process.env.OPENAI_API_KEY; // Make sure you have your API key set in your environment variables
 
   if (!apiKey) {

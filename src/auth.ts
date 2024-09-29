@@ -11,10 +11,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        identifier: { label: "Email/Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials): Promise<User | null> {
         await dbConnect();
         try {
           const user = await UserModel.findOne({
@@ -33,17 +33,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
 
           const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
+            credentials.password as string,
             user.password
           );
 
           if (!isPasswordCorrect) {
             throw new Error("Incorrect password");
           } else {
-            return user;
+            return user as User;
           }
-        } catch (error: any) {
-          throw new Error(error);
+        } catch (error) {
+          throw new Error("Error logging in");
         }
       },
     }),
