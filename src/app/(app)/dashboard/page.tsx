@@ -10,7 +10,7 @@ import { AcceptMessageSchema } from "@/Schemas/acceptMessageSchema";
 import { ApiResponse } from "@/types/apiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader, Loader2, RefreshCcw } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
