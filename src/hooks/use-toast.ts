@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars, no-console */
 "use client"
-
 
 // Inspired by react-hot-toast library
 import * as React from "react"
