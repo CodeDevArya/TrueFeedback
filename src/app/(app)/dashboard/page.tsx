@@ -82,7 +82,7 @@ const Page = () => {
         setIsSwitching(false);
       }
     },
-    [setIsLoading, setMessages]
+    [setIsLoading, setMessages, toast]
   );
 
   useEffect(() => {
