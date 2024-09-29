@@ -22,7 +22,7 @@ export const sendVerificationEmail = async (
       verifyCode
     );
 
-    let info = await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: '"TrueFeedback" <techlyft.official@gmail.com>',
       to: email,
       subject: "Verify your email address",
