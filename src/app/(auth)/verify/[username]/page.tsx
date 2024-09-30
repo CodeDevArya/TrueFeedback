@@ -16,7 +16,7 @@ import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -27,9 +27,10 @@ const VerifyAccount = () => {
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
-    console.log(data);
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/verify-code", {
         username,
@@ -41,7 +42,8 @@ const VerifyAccount = () => {
         description: response.data.message,
       });
 
-      router.replace("/sign-in");
+      setIsLoading(false);
+      router.push("/sign-in");
     } catch (error) {
       console.error("Error verifying account:", error);
 
@@ -52,12 +54,14 @@ const VerifyAccount = () => {
         description: axiosError.response?.data.message,
         variant: "destructive",
       });
+
+      setIsLoading(false);
     }
   };
 
   const dataTwo = useSession();
   if (dataTwo.data) {
-    router.replace("/dashboard");
+    router.push("/dashboard");
   }
 
   if (dataTwo.status === "loading" || dataTwo.data) {
@@ -68,8 +72,8 @@ const VerifyAccount = () => {
     );
   } else {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+      <div className="flex justify-center items-center min-h-screen bg-gray-800">
+        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md m-4">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
               Verify Account
@@ -91,8 +95,15 @@ const VerifyAccount = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Verify Account
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  <>Verify Account</>
+                )}
               </Button>
             </form>
           </Form>

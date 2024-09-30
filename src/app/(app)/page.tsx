@@ -88,8 +88,8 @@ export default function LandingPage() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="hidden sm:block"/>
+          <CarouselNext className="hidden sm:block"/>
         </Carousel>
 
         <section className="text-center space-y-8">

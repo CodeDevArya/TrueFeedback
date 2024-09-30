@@ -92,7 +92,6 @@ export default function SendMessage() {
   // const fetchSuggestedMessages = async () => {
   //   try {
   //     const response = await axios.post<ApiResponse>("/api/suggest-messages");
-  //     console.log(response.data);
   //   } catch (error) {
   //     console.error("Error fetching messages:", error);
   //     // Handle error appropriately

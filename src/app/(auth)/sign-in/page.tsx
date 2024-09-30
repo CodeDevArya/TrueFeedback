@@ -19,10 +19,12 @@ import { useToast } from "@/hooks/use-toast";
 import { signInSchema } from "@/Schemas/signInSchema";
 import { signIn, useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function SignUpForm() {
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -33,6 +35,7 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
+    setIsLoading(true);
     const response = await signIn("credentials", {
       identifier: data.identifier,
       password: data.password,
@@ -45,6 +48,7 @@ export default function SignUpForm() {
           description: "Incorrect username or password",
           variant: "destructive",
         });
+        setIsLoading(false);
         return;
       } else {
         toast({
@@ -52,6 +56,7 @@ export default function SignUpForm() {
           description: "Error Signing In " + response?.error,
           variant: "destructive",
         });
+        setIsLoading(false);
         return;
       }
     }
@@ -79,7 +84,7 @@ export default function SignUpForm() {
   } else {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-800">
-        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md m-4">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
               Join True Feedback
@@ -111,8 +116,15 @@ export default function SignUpForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing
+                    In...
+                  </>
+                ) : (
+                  <>Sign In</>
+                )}
               </Button>
             </form>
           </Form>

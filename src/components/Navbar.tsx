@@ -24,12 +24,12 @@ const Navbar = () => {
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : !user ? (
               <>
-                <Button variant="ghost">
-                  <a href="/sign-in">Login</a>
-                </Button>
-                <Button>
-                  <a href="/sign-up">Sign Up</a>
-                </Button>
+                <a href="/sign-in">
+                  <Button variant="ghost">Login</Button>
+                </a>
+                <a href="/sign-up">
+                  <Button>Sign Up</Button>
+                </a>
               </>
             ) : (
               <>
