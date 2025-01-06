@@ -1,14 +1,13 @@
 import { sendReflexVerseEmail } from "@/helpers/sendVerificationEmail";
 
 export async function POST(request: Request) {
-
     // Allow CORS (cross-origin requests)
     const origin = request.headers.get('Origin');
     const allowedOrigins = ['*']; // Allow all origins - replace '*' with specific domains if needed
 
-    // Set CORS headers
+    // Ensure the origin is a valid string for the header
     const corsHeaders = {
-        "Access-Control-Allow-Origin": allowedOrigins.includes('*') ? '*' : origin, // Allows any origin or specific origins
+        "Access-Control-Allow-Origin": origin ? origin : "*", // Use '*' if origin is null
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE", // Allowed HTTP methods
         "Access-Control-Allow-Headers": "Content-Type", // Allowed request headers
     };
