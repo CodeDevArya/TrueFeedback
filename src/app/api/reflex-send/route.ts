@@ -2,17 +2,11 @@ import { sendReflexVerseEmail } from "@/helpers/sendVerificationEmail";
 
 export async function POST(request: Request, res: any) {
 
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173/');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   const { email, name, budget, customBudget, videoType, videoLength, socialAccounts } = await request.json();
-
-  if (request.method === 'OPTIONS') {
-    // Respond to preflight request
-    res.status(200).end();
-    return;
-  }
 
 
   if (!email || !name || !budget || !videoType) {
